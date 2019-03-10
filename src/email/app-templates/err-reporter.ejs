@@ -1,0 +1,127 @@
+<body style="font-family: monospace;">
+	<h2>Error
+		<%= errCode %>
+	</h2>
+	<hr>
+	<h2>Env Details</h2>
+	<br>
+	<table style="border-collapse: collapse;">
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">time:</th>
+			<td style="border: 1px solid #ddd;padding: 8px;">
+				<%= time %>
+			</td>
+		</tr>
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">ENV_USER</th>
+			<td style="border: 1px solid #ddd;padding: 8px;">
+				<%= ENV_USER %>
+			</td>
+		</tr>
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">host</th>
+			<td style="border: 1px solid #ddd;padding: 8px;">
+				<%= host %>
+			</td>
+		</tr>
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">NODE_ENV</th>
+			<td style="border: 1px solid #ddd;padding: 8px;">
+				<%= NODE_ENV %>
+			</td>
+		</tr>
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">NODE_CONFIG</th>
+			<td style="border: 1px solid #ddd;padding: 8px;white-space: pre-wrap;">
+				<%= NODE_CONFIG %>
+			</td>
+		</tr>
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">NODE_APP_INSTANCE</th>
+			<td style="border: 1px solid #ddd;padding: 8px;">
+				<%= NODE_APP_INSTANCE %>
+			</td>
+		</tr>
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">Database
+				Host</th>
+			<td style="border: 1px solid #ddd;padding: 8px;">
+				<%= databaseHost %>
+			</td>
+		</tr>
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">Database
+				Name</th>
+			<td style="border: 1px solid #ddd;padding: 8px;">
+				<%= databaseName %>
+			</td>
+		</tr>
+	</table>
+	<br>
+	<h2>Err Details</h2>
+	<br>
+	<table style="border-collapse: collapse;">
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">request
+				origin</th>
+			<td style="border: 1px solid #ddd;padding: 8px;">
+				<%= requestOrigin %>
+			</td>
+		</tr>
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">requested
+				url</th>
+			<td style="border: 1px solid #ddd;padding: 8px;">
+				<%= requestedUrl %>
+			</td>
+		</tr>
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">request
+				method</th>
+			<td style="border: 1px solid #ddd;padding: 8px;">
+				<%= reqMethod %>
+			</td>
+		</tr>
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">err
+				details</th>
+			<td style="border: 1px solid #ddd;padding: 8px;white-space: pre-wrap;">
+				<%= errDetails %>
+			</td>
+		</tr>
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">req.headers</th>
+			<td style="border: 1px solid #ddd;padding: 8px;white-space: pre-wrap;">
+				<%= reqHeaders %>
+			</td>
+		</tr>
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">req.body</th>
+			<td style="border: 1px solid #ddd;padding: 8px;white-space: pre-wrap;">
+				<%= reqBody %>
+			</td>
+		</tr>
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">req.query</th>
+			<td style="border: 1px solid #ddd;padding: 8px;white-space: pre-wrap;">
+				<%= reqQuery %>
+			</td>
+		</tr>
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">res.locals</th>
+			<td style="border: 1px solid #ddd;padding: 8px;white-space: pre-wrap;">
+				<%= resLocals %>
+			</td>
+		</tr>
+		<tr>
+			<th style="border: 1px solid #ddd;padding: 8px;padding-top: 12px;padding-bottom: 12px;text-align: left;background-color: #af4c4c;color: white;">request
+				ip</th>
+			<td style="border: 1px solid #ddd;padding: 8px;">
+				<%= requestIp %>
+			</td>
+		</tr>
+	</table>
+	<br>
+	<hr>
+	<p>Miwago Backend Err Responder</p>
+</body>

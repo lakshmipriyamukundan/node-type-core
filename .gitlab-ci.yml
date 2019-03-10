@@ -1,0 +1,75 @@
+stages:
+  - build
+  - deploy
+
+before_script:
+  - export NVM_DIR="$HOME/.nvm"
+  - '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
+  - source ~/.profile
+  - source ~/.bashrc
+  - nvm install v10.7.0
+  - nvm use v10.7.0
+  - node --version
+  - yarn --version
+
+Build:
+  variables:
+    NODE_ENV: runner
+    NODE_APP_INSTANCE: test
+  stage: build
+  retry: 0
+  artifacts:
+    expire_in: 50 mins
+    paths:
+      - node_modules/
+      - dist/
+  script:
+    - yarn install --prefer-offline
+    # unit tests should reset test-db. cz, each version expects a new db schema
+    - yarn run test-with-docs
+  tags:
+    - node
+
+# deploy to dev
+Dev(devapi-cma):
+  stage: deploy
+  variables:
+    NODE_ENV: runner
+    NODE_APP_INSTANCE: test
+  environment:
+    name: devapi-cma
+    url: https://api-cma-qa.cubettech.in/
+  when: on_success
+  only:
+    - master
+  script:
+    # - yarn install
+    # - yarn run build # cz it is running in unit test
+    - ssh cma@185.148.147.4 "rm -rf ~/cma-api"
+    - ssh cma@185.148.147.4 "mkdir ~/cma-api"
+    - rsync -avz -e ssh ./dist/src/* cma@185.148.147.4:~/cma-api
+    - ssh cma@185.148.147.4 "export NODE_ENV=production && export PATH=/home/cma/bin:/home/cma/.local/bin:/home/cma/bin:/home/cma/.local/bin:/home/cma/.nvm/versions/node/v10.7.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin && node --version && yarn --version && cd ~/cma-api && yarn install && cd public && yarn install && pm2 restart cma-api"
+  tags:
+    - node
+
+  # deploy to staging
+Staging(stagingapi-cma):
+  stage: deploy
+  variables:
+    NODE_ENV: runner
+    NODE_APP_INSTANCE: test
+  environment:
+    name: stagingapi-cma
+    url: https://api-cma.cubettech.in/
+  when: on_success
+  only:
+    - tags
+  script:
+    # - yarn install
+    # - yarn run build # cz it is running in unit test
+    - ssh cma-dev@185.148.147.4 "rm -rf ~/cma-staging-api"
+    - ssh cma-dev@185.148.147.4 "mkdir ~/cma-staging-api"
+    - rsync -avz -e ssh ./dist/src/* cma-dev@185.148.147.4:~/cma-staging-api
+    - ssh cma-dev@185.148.147.4 "export NODE_ENV=production && export PATH=/home/cma-dev/bin:/home/cma-dev/.local/bin:/home/cma-dev/bin:/home/cma-dev/.local/bin:/home/cma-dev/.nvm/versions/node/v10.7.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin && node --version && yarn --version && cd ~/cma-staging-api && yarn install && cd public && yarn install && pm2 restart cma-staging-api"
+  tags:
+    - node
