@@ -7,7 +7,6 @@ import * as logger from 'morgan';
 import * as path from 'path';
 import * as favicon from 'serve-favicon';
 
-
 // import { attachTokenData } from './access-control/attach-token-data';
 // import { rootAccess } from './access-control/root-access';
 
@@ -61,7 +60,6 @@ app.use(
 // un-comment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
-
 if (morganEnabled) {
   app.use(logger('dev'));
 }
@@ -71,7 +69,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/v1', apis);
-
 
 // error handler
 const requestErrHandler: express.ErrorRequestHandler = async (
@@ -91,9 +88,7 @@ const requestErrHandler: express.ErrorRequestHandler = async (
     process.env.NODE_ENV !== 'development' &&
     process.env.TESTING !== 'true'
   ) {
-
-      console.log('ERR: some error occurred while reporting issue', err); //tslint:disable-line
-    
+    console.log('ERR: some error occurred while reporting issue', err); //tslint:disable-line
   }
 
   if (req.xhr) {

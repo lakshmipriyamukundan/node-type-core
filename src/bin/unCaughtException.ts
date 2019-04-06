@@ -1,5 +1,3 @@
-
-
 // handle uncaught exception
 process.on('uncaughtException', async error => {
   // tslint:disable-next-line:no-console
@@ -10,5 +8,4 @@ process.on('uncaughtException', async error => {
   console.trace(error);
   // tslint:disable-next-line:no-console
   console.log('\n########################################\n');
-  
 });
