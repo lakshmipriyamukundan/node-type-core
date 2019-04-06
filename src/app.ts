@@ -75,7 +75,7 @@ app.use('/v1', apis);
 
 // error handler
 const requestErrHandler: express.ErrorRequestHandler = async (
-  err: ExpressRequestError,
+  err: any,
   req,
   res,
   next,
