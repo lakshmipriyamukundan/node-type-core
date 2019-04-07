@@ -6,8 +6,3 @@ app:
   docs: false
   logging: true # for logging stuffs out
   morgan: false # for request logging
-  
-mails:
-  enable: false
-sendGrid:
-  apiKey: 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

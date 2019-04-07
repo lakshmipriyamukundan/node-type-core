@@ -3,49 +3,16 @@ import { get as getConfig } from 'config';
 import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 import * as express from 'express';
-import * as logger from 'morgan';
+import * as morgan from 'morgan';
 import * as path from 'path';
 import * as favicon from 'serve-favicon';
 
-// import { attachTokenData } from './access-control/attach-token-data';
-// import { rootAccess } from './access-control/root-access';
-
-// import {RequestError, RequestErrorType} from 'issue-maker/dist/src/error-types/express-request-error';
-// init db
-// import { mongooseConnectionPromise, mongoose } from './db.init';
-
-// export { mongoose, mongooseConnectionPromise }; // exporting for quick access in tests
+import { stream} from './config/app/winston';
 
 import { apis } from './routes';
-
-// mongooseConnectionPromise
-//   .then(() => {
-//     lme.i(`> database connected:${getConfig('database.url')}`);
-//     /** ready to use. The `mongoose.connect()` promise resolves to undefined. */
-
-//     // if this is a forked process, notify parent when the server is ready
-//     if (process.send) {
-//       lme.i('sending ready');
-//       process.send({ msg: 'ready' });
-//       process.on('message', msg => {
-//         if (typeof msg === 'object' && msg.msg === 'terminate') {
-//           console.log('terminating server upon parent request. bye :)'); // tslint:disable-line:no-console
-//           process.exit(msg.statusCode);
-//         }
-//       });
-//     }
-//   })
-//   .catch(err => {
-//     // tslint:disable-next-line
-//     lme.e(
-//       '> MongoDB connection error. Please make sure MongoDB is running. ' + err,
-//     );
-//     process.exit(1);
-//   });
-
 export const app = express();
 
-const morganEnabled: boolean = getConfig('app.morgan');
+const morganEnabled: boolean = getConfig('app.combinedLogger');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -61,7 +28,7 @@ app.use(
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 if (morganEnabled) {
-  app.use(logger('dev'));
+  app.use(morgan('dev', { stream }));
 }
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
