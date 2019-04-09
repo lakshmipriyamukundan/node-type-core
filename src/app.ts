@@ -7,7 +7,7 @@ import * as morgan from 'morgan';
 import * as path from 'path';
 import * as favicon from 'serve-favicon';
 
-import { stream, logger} from './config/app/winston';
+import { stream, logger } from './config/app/winston';
 
 import { apis } from './routes';
 export const app = express();
@@ -37,7 +37,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/v1', apis);
 
-
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+  const errVar = {
+    status: '404',
+    message: 'page not found',
+    statusCode: '404',
+  };
+  next(errVar);
+});
 
 // error handler
 const requestErrHandler: express.ErrorRequestHandler = (
@@ -47,26 +55,30 @@ const requestErrHandler: express.ErrorRequestHandler = (
   next,
 ) => {
   //if (err.statusCode >= 500) {
-  //   logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
+  logger.error(
+    `${err.status || 500} - ${err.message} - ${req.originalUrl} - ${
+      req.method
+    } - ${req.ip}`,
+  );
   //   // stdout to log
-  //   console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'); // tslint:disable-line
+  // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'); // tslint:disable-line
   //   console.log(err); // tslint:disable-line
   //   // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'); // tslint:disable-line
   // //}
 
-  // if (req.xhr) {
-  //   // remove sensitive err details
-  //   if (err.statusCode >= 500) {
-  //     return res.status(err.statusCode).send({
-  //       status: 'failed',
-  //       message: err.message,
-  //       statusCode: err.statusCode,
-  //       remarks: 'This incident has reported.',
-  //     });
-  //   } else {
-  //     return res.status(err.statusCode).send(err);
-  //   }
-  // }
+  if (req.xhr) {
+    // remove sensitive err details
+    if (err.statusCode >= 500) {
+      return res.status(err.statusCode).send({
+        status: 'failed',
+        message: err.message,
+        statusCode: err.statusCode,
+        remarks: 'This incident has reported.',
+      });
+    } else {
+      return res.status(err.statusCode).send(err);
+    }
+  }
 
   // set locals, only providing error in development
   res.locals.message = err.message;
