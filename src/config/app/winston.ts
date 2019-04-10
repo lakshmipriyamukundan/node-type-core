@@ -9,13 +9,7 @@ const dailyRotateFile = require('winston-daily-rotate-file');
 const defaultLogLevel: string = getConfig('app.defaultLogLevel');
 
 // const INFO_FILE_PATH = path.join(userHome, 'Projects', 'type-core','logs', 'info.log');
-const ERROR_FILE_PATH = path.join(
-  userHome,
-  'Projects',
-  'type-core',
-  'logs',
-  'error.log',
-);
+const ERROR_FILE_PATH = path.join(userHome, 'logs', 'error.log');
 // const SILLY_FILE_PATH = path.join(userHome, 'Projects', 'type-core', 'logs', 'silly.log');
 
 const options: LoggerOptions = {
