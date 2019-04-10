@@ -54,17 +54,12 @@ const requestErrHandler: express.ErrorRequestHandler = (
   res,
   next,
 ) => {
-  //if (err.statusCode >= 500) {
+  // if (err.statusCode >= 500) {
   logger.error(
     `${err.status || 500} - ${err.message} - ${req.originalUrl} - ${
       req.method
     } - ${req.ip}`,
   );
-  //   // stdout to log
-  // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'); // tslint:disable-line
-  //   console.log(err); // tslint:disable-line
-  //   // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'); // tslint:disable-line
-  // //}
 
   if (req.xhr) {
     // remove sensitive err details
