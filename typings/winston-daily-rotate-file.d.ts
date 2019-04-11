@@ -1,1 +1,1 @@
-declare module "winston-daily-rotate-file" 
+declare module 'winston-daily-rotate-file';
